@@ -1,2 +1,2 @@
 # hacktheworld
-Making incredible project for developent ourselves
+Making incredible project for develop ourselves
