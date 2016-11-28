@@ -20,7 +20,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @EnableAutoConfiguration
-@ComponentScan(basePackages= {"com.loan.rest", "com.loan.service", "com.loan.repository", "com.loan.domain"})
+@ComponentScan(basePackages= {"com.loan"})
 public class Application {
 
     public static void main(String[] args) throws Exception {
@@ -33,4 +33,6 @@ public class Application {
         registration.addInitParameter(ServletProperties.JAXRS_APPLICATION_CLASS, JerseyConfig.class.getName());
         return registration;
     }
+
+
 }

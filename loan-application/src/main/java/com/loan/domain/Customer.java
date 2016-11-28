@@ -2,12 +2,16 @@ package com.loan.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.loan.util.DateUtil;
+import com.loan.util.JsonJodaDateTimeSerializer;
 import com.loan.util.LocalDateConverter;
 
+import org.joda.time.DateTime;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.*;
 
@@ -17,7 +21,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Table(indexes = {
         @Index(name = "idx_first_name_last_name", columnList = "firstName,lastName"),
-        @Index(name = "idx_email_password", columnList = "email, password")})
+        @Index(name = "idx_email", columnList = "email")})
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class Customer extends BaseEntity {
@@ -36,8 +40,7 @@ public class Customer extends BaseEntity {
 
     @Column(nullable = true)
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @Convert(converter = LocalDateConverter.class)
-    private LocalDate birthday;
+    private Date birthday;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -45,10 +48,6 @@ public class Customer extends BaseEntity {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @Column(nullable = true)
     private String mobile;
-
-    @JsonIgnore
-    @Column(nullable = true)
-    private String password;
 
     @JsonIgnore
     @Column(nullable = true)
@@ -60,11 +59,6 @@ public class Customer extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private CustomerType customerType = CustomerType.STANDARD;
 
-
-    @JsonIgnore
-    public long getCustomerAge() {
-        return DateUtil.getAge(this.getBirthday());
-    }
 
     @JsonIgnore
     public String getFullName() {

@@ -19,8 +19,6 @@ public interface CustomerRepository extends PagingAndSortingRepository<Customer,
 
     Customer findByEmail(String email);
 
-    Customer findByEmailAndPassword(String email, String hashedPassword);
-
     List<Customer> findByStatus(Customer.StatusType status);
 
     List<Customer> findByStatusAndCreatedDateAfter(Customer.StatusType status, DateTime date);

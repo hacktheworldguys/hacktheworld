@@ -12,6 +12,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.*;
 
@@ -32,14 +33,12 @@ public class BaseEntity implements Serializable {
     private Long id;
 
     @JsonView(Views.Internal.class)
-    @JsonSerialize(using = JsonJodaDateTimeSerializer.class)
-    @CreatedDate
     @Column(nullable = false, updatable = false)
-    private DateTime createdDate;
+    @CreatedDate
+    private Date createdDate = new Date();
 
     @JsonView(Views.Internal.class)
-    @JsonSerialize(using = JsonJodaDateTimeSerializer.class)
     @LastModifiedDate
-    private DateTime modifiedDate;
+    private Date modifiedDate =new Date();
 
 }
