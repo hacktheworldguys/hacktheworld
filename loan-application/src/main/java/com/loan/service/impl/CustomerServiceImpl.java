@@ -26,6 +26,7 @@ public class CustomerServiceImpl implements CustomerService {
         CustomerResponse customerResponse = new CustomerResponse();
         if (customer != null) {
             customerResponse.setCustomerId(customer.getId());
+            customerResponse.setEmail(customer.getEmail());
             customerResponse.setMessage("OK");
         }else{
             customerResponse.setMessage("NOK");

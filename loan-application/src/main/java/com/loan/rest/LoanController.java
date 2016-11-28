@@ -1,22 +1,19 @@
 package com.loan.rest;
 
 import com.loan.domain.Customer;
-import com.loan.repository.CustomerRepository;
-import com.loan.request.CustomerRequest;
+import com.loan.domain.Loan;
+import com.loan.request.LoanRequest;
 import com.loan.service.CustomerService;
 import com.loan.service.LoanService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.Produces;
 
 @Path("/api/loan")
 @Component
@@ -29,15 +26,31 @@ public class LoanController {
     private LoanService loanService;
 
     @POST
-    @Path("/{customerId}/apply")
-    public void apply(@PathParam("customerId") long customerId, @QueryParam("amount") BigDecimal amount, @QueryParam("paymentTerm") int paymentTerm) {
+    @Path("/apply")
+    public void apply(LoanRequest loanRequest) {
 
-        Customer customer = customerService.findOne(customerId);
+        Customer customer = customerService.findOne(loanRequest.getCustomerId());
 
-        if(customer==null)
+        if (customer == null)
             throw new IllegalArgumentException("no suitable customer found.");
 
-        loanService.saveApply(amount,paymentTerm,customer);
+        loanService.saveApply(loanRequest, customer);
+    }
+
+
+    @POST
+    @Path("/applies")
+    @Produces("application/json")
+    public List<Loan> applyList(LoanRequest loanRequest) {
+
+        Customer customer = customerService.findOne(loanRequest.getCustomerId());
+
+        if (customer == null)
+            throw new IllegalArgumentException("no suitable customer found.");
+
+        List<Loan> loans = loanService.getLoanApplyByCustomerId(customer.getId());
+
+        return loans;
     }
 
 }

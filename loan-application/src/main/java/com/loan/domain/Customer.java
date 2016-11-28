@@ -39,7 +39,7 @@ public class Customer extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = false)
     private String password;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -53,9 +53,6 @@ public class Customer extends BaseEntity {
     @JsonIgnore
     @Column(nullable = true)
     private BigDecimal annualSalary;
-
-    @Enumerated(EnumType.STRING)
-    private CreditStatus creditStatus;
 
     @Enumerated(EnumType.STRING)
     private CustomerType customerType = CustomerType.STANDARD;
@@ -130,14 +127,6 @@ public class Customer extends BaseEntity {
         this.address = address;
     }
 
-    public CreditStatus getCreditStatus() {
-        return creditStatus;
-    }
-
-    public void setCreditStatus(CreditStatus creditStatus) {
-        this.creditStatus = creditStatus;
-    }
-
     public CustomerType getCustomerType() {
         return customerType;
     }
@@ -172,21 +161,6 @@ public class Customer extends BaseEntity {
 
     public enum StatusType {
         ACTIVE, PASSIVE, LOCKED
-    }
-
-
-    public enum CreditStatus {
-        INITIALIZED,
-        APPROVED,
-        SUSPENDED;
-
-        public boolean isApproved() {
-            return APPROVED == this;
-        }
-
-        public boolean shouldDashboardVisible() {
-            return APPROVED == this || SUSPENDED == this;
-        }
     }
 
     public enum CustomerType{

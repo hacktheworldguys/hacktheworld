@@ -69,7 +69,6 @@ public class AuthenticationController {
 
         customer.setBirthday(dt);
         customer.setMobile(customerRequest.getMobilePhone());
-        customer.setCreditStatus(Customer.CreditStatus.INITIALIZED);
         customer.setStatus(Customer.StatusType.ACTIVE);
 
         return customer;

@@ -17,4 +17,6 @@ public class CustomerResponse {
     @NotNull
     private long customerId;
 
+    @NotNull
+    private String email;
 }
