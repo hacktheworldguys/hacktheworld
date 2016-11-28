@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -49,6 +50,13 @@ public class RestResource {
         Admin admin= getAdminModel(adminRequest);
         adminService.saveAdmin(admin);
     }
+
+    @POST
+    @Path("/login")
+    public String authenticate(AdminRequest adminRequest) {
+        return adminService.authenticate(adminRequest.getEmailAddress(), adminRequest.getPassword());
+    }
+
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

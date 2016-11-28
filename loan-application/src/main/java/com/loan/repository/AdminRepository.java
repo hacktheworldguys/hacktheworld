@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
 public interface AdminRepository extends PagingAndSortingRepository<Admin, Long>,
         JpaSpecificationExecutor<Admin>, QueryDslPredicateExecutor<Admin> {
 
-    Admin findByEmailAndPassword(String email, String password);
+    int countByEmailAndPassword(String email, String password);
 }

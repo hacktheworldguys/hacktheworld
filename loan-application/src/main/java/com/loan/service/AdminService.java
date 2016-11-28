@@ -7,5 +7,7 @@ import com.loan.domain.Admin;
  */
 public interface AdminService {
 
-    public void saveAdmin(Admin admin);
+    void saveAdmin(Admin admin);
+
+    String authenticate(String emailAddress, String password);
 }

@@ -22,4 +22,14 @@ public class AdminServiceImpl implements AdminService {
 
         adminRepository.save(admin);
     }
+
+    @Override
+    public String authenticate(String emailAddress, String password) {
+        int count = adminRepository.countByEmailAndPassword(emailAddress, password);
+
+        if (count > 0)
+            return "OK";
+        else
+            return "NOK";
+    }
 }

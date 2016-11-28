@@ -36,7 +36,7 @@ myApp.controller("View1Ctrl", function ($scope, $http) {
 
         //Clear the form
         function clearFormData() {
-            alert("Customer Submitted successfully!");
+            alert("Customer registered successfully!");
             $scope.customer.firstName = '';
             $scope.customer.lastName = '';
             $scope.customer.emailAddress = '';
