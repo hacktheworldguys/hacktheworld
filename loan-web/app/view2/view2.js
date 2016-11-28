@@ -10,8 +10,8 @@ myApp.config(['$routeProvider', function ($routeProvider) {
 
 myApp.controller("View2Ctrl", function ($scope, $http) {
 
-    $scope.loginBox=true;
-    $scope.signupBox=false;
+    $scope.loginBox = true;
+    $scope.signupBox = false;
 
     $scope.singUpForm = function () {
 
@@ -57,9 +57,9 @@ myApp.controller("View2Ctrl", function ($scope, $http) {
 
         function success(response) {
 
-            if(response.data =='OK'){
+            if (response.data.message == 'OK') {
                 console.log('successfully logged in! Welcome');
-            }else{
+            } else {
                 alert('Invalid Email or password. Try again!')
                 clearFormData()
             }

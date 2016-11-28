@@ -27,4 +27,6 @@ public interface CustomerRepository extends PagingAndSortingRepository<Customer,
 
     @Query("select c.customerType from Customer c where c.id = :customerId")
     Customer.CustomerType findCustomerTypeById(@Param("customerId") Long customerId);
+
+    Customer findByEmailAndPassword(String email, String password);
 }

@@ -9,18 +9,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminRequest {
+public class CustomerResponse {
 
     @NotNull
-    private String firstName;
+    private String message;
 
     @NotNull
-    private String LastName;
-
-    @NotNull
-    private String emailAddress;
-
-    @NotNull
-    private String password;
+    private long customerId;
 
 }

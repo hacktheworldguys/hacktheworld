@@ -40,9 +40,11 @@ myApp.controller("View1Ctrl", function ($scope, $http) {
             $scope.customer.firstName = '';
             $scope.customer.lastName = '';
             $scope.customer.emailAddress = '';
+            $scope.customer.password = '';
             $scope.customer.birthday = '';
             $scope.customer.mobilePhone = '';
             $scope.customer.address = '';
+            $scope.customer.annualSalary = '';
         };
     };
 });
