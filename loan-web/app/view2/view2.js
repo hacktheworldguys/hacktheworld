@@ -17,8 +17,9 @@ myApp.controller("View2Ctrl", function ($scope, $http) {
         $scope.loan.customerId = $scope.login.customerId;
 
         var json = 'http://ipv4.myexternalip.com/json';
-        $http.get(json).then(function(result) {
-            $scope.loan.ipAddress= result.data.ip;
+        $http.get(json).then(function (result) {
+
+            $scope.loan.ipAddress = result.data.ip;
 
             $http({
                 method: 'POST',
@@ -29,26 +30,31 @@ myApp.controller("View2Ctrl", function ($scope, $http) {
                 }
             }).then(success, error);
 
-            $http({
-                method: 'POST',
-                url: 'http://localhost:8080/rest/api/loan/applies',
-                data: angular.toJson($scope.loan),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(applyListResponse, applyListError);
-
-            function applyListResponse(response) {
-                $scope.loans = response.data;
-            };
-
-            function applyListError(response) {
-                console.log(response.statusText);
-            };
-
             function success(response) {
-                console.log('Loan Apply is successfully registered!');
-                clearFormData()
+                if (response.data == 'OK') {
+                    console.log('Loan Apply is successfully registered!');
+                } else {
+                    console.log(response.data);
+                    alert(response.data);
+                }
+
+                $http({
+                    method: 'POST',
+                    url: 'http://localhost:8080/rest/api/loan/applies',
+                    data: angular.toJson($scope.loan),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(applyListResponse, applyListError);
+
+                function applyListResponse(response) {
+                    $scope.loans = response.data;
+                    clearFormData();
+                };
+
+                function applyListError(response) {
+                    console.log(response.statusText);
+                };
             };
 
             function error(response) {
@@ -58,28 +64,12 @@ myApp.controller("View2Ctrl", function ($scope, $http) {
             //Clear the form
             function clearFormData() {
                 alert("Loan Apply is successfully registered!");
-                $scope.loan.amount= '';
+                $scope.loan.amount = '';
                 $scope.loan.term = '';
-                $scope.loan.customerId='';
+                $scope.loan.customerId = '';
             };
 
-            $http({
-                method: 'POST',
-                url: 'http://localhost:8080/rest/api/loan/applies',
-                data: angular.toJson($scope.loan),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(applyListResponse, applyListError);
-
-            function applyListResponse(response) {
-                $scope.loans = response.data;
-            };
-
-            function applyListError(response) {
-                console.log(response.statusText);
-            };
-        }, function(e) {
+        }, function (e) {
             alert("When getting ip address, something was wrong. please control your internet connection");
         });
     };
@@ -102,11 +92,11 @@ myApp.controller("View2Ctrl", function ($scope, $http) {
                 $scope.loginBox = false;
                 $scope.signupBox = true;
 
-               // $scope.loan.customer = response.data.customerId;
+                // $scope.loan.customer = response.data.customerId;
                 $scope.login.email = response.data.email;
                 $scope.login.customerId = response.data.customerId;
 
-                console.log('successfully logged in! Welcome,'+response.data.email);
+                console.log('successfully logged in! Welcome,' + response.data.email);
             } else {
                 alert('Invalid Email or password. Try again!')
                 clearFormData()
