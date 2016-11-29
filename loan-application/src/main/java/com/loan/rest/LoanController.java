@@ -9,6 +9,9 @@ import com.loan.service.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.POST;
@@ -27,16 +30,41 @@ public class LoanController {
 
     @POST
     @Path("/apply")
-    public void apply(LoanRequest loanRequest) {
+    public String apply(LoanRequest loanRequest) {
 
         Customer customer = customerService.findOne(loanRequest.getCustomerId());
 
         if (customer == null)
             throw new IllegalArgumentException("no suitable customer found.");
 
-        List<Loan> loans = loanService.findByIpAddressAndCustomerId(loanRequest.getIpAddress(),loanRequest.getCustomerId());
+        List<Loan> loans = loanService.findByIpAddressAndCustomerId(loanRequest.getIpAddress(), loanRequest.getCustomerId());
 
-        loanService.saveApply(loanRequest, customer);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        int applyLimit = 0;
+        for (Loan loan : loans) {
+            try {
+
+                Date systemDate = dateFormat.parse(dateFormat.format(new Date()));
+                Date createdDate = dateFormat.parse(loan.getCreatedDate().toString());
+
+                if (systemDate.compareTo(createdDate) == 0) {
+                    applyLimit++;
+                }
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (applyLimit < 3) {
+
+            loanService.saveApply(loanRequest, customer);
+
+            return "OK";
+
+        } else {
+            return "You exceed maximum limit of apply at same day";
+        }
     }
 
 
