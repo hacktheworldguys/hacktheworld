@@ -34,6 +34,8 @@ public class LoanController {
         if (customer == null)
             throw new IllegalArgumentException("no suitable customer found.");
 
+        List<Loan> loans = loanService.findByIpAddressAndCustomerId(loanRequest.getIpAddress(),loanRequest.getCustomerId());
+
         loanService.saveApply(loanRequest, customer);
     }
 

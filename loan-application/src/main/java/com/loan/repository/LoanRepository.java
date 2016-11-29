@@ -14,4 +14,6 @@ public interface LoanRepository extends PagingAndSortingRepository<Loan, Long>,
         JpaSpecificationExecutor<Loan>, QueryDslPredicateExecutor<Loan> {
 
     List<Loan> findByCustomerId(long customerId);
+
+    List<Loan> findByIpAddressAndCustomerId(String ipAddress, long customerId);
 }

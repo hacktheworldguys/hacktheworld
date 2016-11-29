@@ -15,4 +15,6 @@ public interface LoanService {
         void saveApply(LoanRequest loanRequest, Customer customer);
 
         List<Loan> getLoanApplyByCustomerId(long customerId);
+
+        List<Loan> findByIpAddressAndCustomerId(String ipAddress, long customerId);
 }
